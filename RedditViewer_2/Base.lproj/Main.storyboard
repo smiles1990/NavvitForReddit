@@ -280,6 +280,63 @@
                                     <outlet property="cellTitle" destination="b5B-6b-JJ6" id="ea3-EM-Xo5"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell2" rowHeight="101" id="pFf-2y-Stw" customClass="MyCell" customModule="RedditViewer_2" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="129" width="375" height="101"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pFf-2y-Stw" id="Obq-X3-q2m">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" text="" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="none" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TBg-ZK-lm0">
+                                            <rect key="frame" x="8" y="0.0" width="359" height="70"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="70" id="NO5-Ia-q6K"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-----" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSi-Qi-VKe">
+                                            <rect key="frame" x="8" y="73" width="39.5" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.99925261740000004" green="0.70024740699999999" blue="0.2223213017" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.20814324819999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <size key="shadowOffset" width="1" height="1"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rxv-q9-hY0">
+                                            <rect key="frame" x="96" y="70" width="30" height="30"/>
+                                            <state key="normal" title="↓">
+                                                <color key="titleColor" red="0.049363223640000002" green="0.66485985459999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kA6-b2-tqD">
+                                            <rect key="frame" x="67" y="70" width="30" height="30"/>
+                                            <state key="normal" title="↑ ">
+                                                <color key="titleColor" red="0.99925416710000003" green="0.72198623419999997" blue="0.2892817855" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="NSi-Qi-VKe" firstAttribute="top" secondItem="TBg-ZK-lm0" secondAttribute="bottom" constant="3" id="5by-99-Mfr"/>
+                                        <constraint firstAttribute="trailing" secondItem="TBg-ZK-lm0" secondAttribute="trailing" constant="8" id="6nP-Ha-o6b"/>
+                                        <constraint firstItem="Rxv-q9-hY0" firstAttribute="top" secondItem="TBg-ZK-lm0" secondAttribute="bottom" id="CNl-Vg-73J"/>
+                                        <constraint firstItem="Rxv-q9-hY0" firstAttribute="leading" secondItem="NSi-Qi-VKe" secondAttribute="trailing" constant="48.5" id="IdQ-wv-LuV"/>
+                                        <constraint firstAttribute="bottom" secondItem="Rxv-q9-hY0" secondAttribute="bottom" constant="0.5" id="KOy-Fx-2ty"/>
+                                        <constraint firstAttribute="bottom" secondItem="NSi-Qi-VKe" secondAttribute="bottom" constant="6.5" id="Vwa-ti-mdb"/>
+                                        <constraint firstItem="kA6-b2-tqD" firstAttribute="top" secondItem="TBg-ZK-lm0" secondAttribute="bottom" id="WLR-ff-nDO"/>
+                                        <constraint firstItem="kA6-b2-tqD" firstAttribute="leading" secondItem="NSi-Qi-VKe" secondAttribute="trailing" constant="19.5" id="a1f-hO-QUP"/>
+                                        <constraint firstAttribute="bottom" secondItem="kA6-b2-tqD" secondAttribute="bottom" constant="0.5" id="ipM-hp-7Wn"/>
+                                        <constraint firstItem="NSi-Qi-VKe" firstAttribute="leading" secondItem="Obq-X3-q2m" secondAttribute="leading" constant="8" id="nGX-B5-18x"/>
+                                        <constraint firstItem="TBg-ZK-lm0" firstAttribute="leading" secondItem="Obq-X3-q2m" secondAttribute="leading" constant="8" id="veX-9E-hhp"/>
+                                        <constraint firstItem="TBg-ZK-lm0" firstAttribute="top" secondItem="Obq-X3-q2m" secondAttribute="top" id="x8K-x9-Mtn"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="cellScore" destination="NSi-Qi-VKe" id="fSt-eo-Rkx"/>
+                                    <outlet property="cellTitle" destination="TBg-ZK-lm0" id="juE-5L-LOr"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="6MK-FR-xJb" id="Gwf-c1-Ws5"/>
@@ -297,7 +354,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bTN-J0-iLz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-311" y="779"/>
+            <point key="canvasLocation" x="-311.19999999999999" y="778.56071964017997"/>
         </scene>
         <!--Link View-->
         <scene sceneID="SDL-JM-WB9">

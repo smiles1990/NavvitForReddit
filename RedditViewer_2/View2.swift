@@ -85,8 +85,8 @@ class View2: UITableViewController {
         URLSession.shared.dataTask(with: myURL) { (data, response, error) in
             guard let data = data else { return }
             
-                let backToString = String(data: data, encoding: String.Encoding.utf8) as String!
-                print("It's me: "+backToString! as String!)
+//                let backToString = String(data: data, encoding: String.Encoding.utf8) as String!
+//                print("It's me: "+backToString! as String!)
 
             
             do{
@@ -151,16 +151,14 @@ class View2: UITableViewController {
     
     public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> MyCell {
         
-        let oneCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MyCell
-    
+        var oneCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MyCell
+        
         if postArray.count != 0 {
-            oneCell.cellTitle.text = postArray[indexPath.row].postTitle
-            oneCell.cellScore.text = String("\(postArray[indexPath.row].postScore)")
-            
+        
             var data = Data()
             let myURL = URL(string: postArray[indexPath.row].postImageURL)
             
-            if myURL != nil {
+            if postArray[indexPath.row].postImageURL != "" {
                 do {
                     data = try Data(contentsOf: myURL!)
                     oneCell.cellImage.image = UIImage(data: data)
@@ -168,8 +166,13 @@ class View2: UITableViewController {
                     print("Error: data error")
                 }
             }else{
-                oneCell.cellImage.isHidden = true
+                oneCell = tableView.dequeueReusableCell(withIdentifier: "cell2", for: indexPath) as! MyCell
+                //oneCell.cellImage.isHidden = true
             }
+            
+            oneCell.cellTitle.text = postArray[indexPath.row].postTitle
+            oneCell.cellScore.text = String("\(postArray[indexPath.row].postScore)")
+            
         }else{
             print("Post Array:", postArray.count)
         }

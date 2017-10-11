@@ -110,37 +110,41 @@ class SuperFunctions{
     }
     
     func refreshToken(){
-        let accessTokenURL = NSURL(string: "https://www.reddit.com/api/v1/access_token")
-        let request = NSMutableURLRequest(url: accessTokenURL as URL!)
-        let session = URLSession.shared
-        request.httpMethod = "POST"
         
-        let postString = "grant_type=refresh_token&refresh_token="+UserDefaults.standard.string(forKey: "currentRefreshToken")!
-        
-        var loginString = ""
-        loginString.append(UserDefaults.standard.string(forKey: "ClientID")!)
-        loginString.append(": ")
-        let loginData = loginString.data(using: String.Encoding.utf8)!
-        let base64EncodedString = loginData.base64EncodedString()
-        
-        request.setValue("Basic \(base64EncodedString)", forHTTPHeaderField: "Authorization")
-        request.httpBody = postString.data(using: String.Encoding.utf8)
-        
-        var tokenExpiry = (Date().timeIntervalSince1970 * 1000)
-        
-        session.dataTask(with: request as URLRequest){ (data,response,error) in
-            guard let data = data else { return }
-//            let backToString = String(data: data, encoding: String.Encoding.utf8) as String!
-//            print(backToString as String!)
-            do{
-                let info = try JSONDecoder().decode(RefreshUserToken.self, from: data)
-                UserDefaults.standard.set(info.access_token, forKey: "currentAccessToken")
-                tokenExpiry = tokenExpiry + info.expires_in
-                UserDefaults.standard.set(tokenExpiry, forKey: "expiryTime")
-            }catch let jsonErr {
-                print ("I failed Sire, forgive me, please!", jsonErr)
-            }
-        }.resume()
+        if UserDefaults.standard.string(forKey: "currentAccessToken") != nil {
+            
+            let accessTokenURL = NSURL(string: "https://www.reddit.com/api/v1/access_token")
+            let request = NSMutableURLRequest(url: accessTokenURL as URL!)
+            let session = URLSession.shared
+            request.httpMethod = "POST"
+            
+            let postString = "grant_type=refresh_token&refresh_token="+UserDefaults.standard.string(forKey: "currentRefreshToken")!
+            
+            var loginString = ""
+            loginString.append(UserDefaults.standard.string(forKey: "ClientID")!)
+            loginString.append(": ")
+            let loginData = loginString.data(using: String.Encoding.utf8)!
+            let base64EncodedString = loginData.base64EncodedString()
+            
+            request.setValue("Basic \(base64EncodedString)", forHTTPHeaderField: "Authorization")
+            request.httpBody = postString.data(using: String.Encoding.utf8)
+            
+            var tokenExpiry = (Date().timeIntervalSince1970 * 1000)
+            
+            session.dataTask(with: request as URLRequest){ (data,response,error) in
+                guard let data = data else { return }
+    //            let backToString = String(data: data, encoding: String.Encoding.utf8) as String!
+    //            print(backToString as String!)
+                do{
+                    let info = try JSONDecoder().decode(RefreshUserToken.self, from: data)
+                    UserDefaults.standard.set(info.access_token, forKey: "currentAccessToken")
+                    tokenExpiry = tokenExpiry + info.expires_in
+                    UserDefaults.standard.set(tokenExpiry, forKey: "expiryTime")
+                }catch let jsonErr {
+                    print ("I failed Sire, forgive me, please!", jsonErr)
+                }
+            }.resume()
+        }
     }
 
     func checkTokenStatus() {

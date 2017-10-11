@@ -39,6 +39,7 @@ class webAuthPopupVC: UIViewController, UIWebViewDelegate {
         let currentURL = myWebView.request?.url?.absoluteString
         print("I'M MR MEESEEKS \(String(describing: currentURL)) LOOK AT ME!")
         SuperFunctions().parseAuthCode(returnedString: currentURL!)
+        SuperFunctions().getAccessToken()
         
         dismiss(animated: true, completion: nil)
     }

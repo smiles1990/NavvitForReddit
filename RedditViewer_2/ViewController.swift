@@ -119,6 +119,7 @@ class ViewController: UITableViewController, UIApplicationDelegate {
 //            self.sectionsArray.insert(subscribedSubredditsSection, at: 0)
 //        }
         
+        getSubscribedSubreddits()
         self.myTableView.reloadData()
         
         refresher.endRefreshing()
@@ -128,48 +129,54 @@ class ViewController: UITableViewController, UIApplicationDelegate {
     
     func getSubscribedSubreddits(){
         
-        SuperFunctions().checkTokenStatus()
-        
-        let subscriberURL = NSURL(string: "https://oauth.reddit.com/subreddits/mine/subscriber.json")
-        let request = NSMutableURLRequest(url: subscriberURL as URL!)
-        let session = URLSession.shared
-        
-        request.httpMethod = "GET"
-        
-        var accessTokenString = "bearer "
-        accessTokenString.append(UserDefaults.standard.string(forKey: "currentAccessToken")!)
-        
-        request.setValue("\(accessTokenString)", forHTTPHeaderField: "Authorization")
-        
-        session.dataTask(with: request as URLRequest){ (data,response,error) in
-            guard let data = data else { return }
+        print ("I'm being called")
+        if UserDefaults.standard.string(forKey: "currentAccessToken") != nil {
+            SuperFunctions().checkTokenStatus()
             
-//            let backToString = String(data: data, encoding: String.Encoding.utf8) as String!
-//            print("It's me: "+backToString! as String!)
+            let subscriberURL = NSURL(string: "https://oauth.reddit.com/subreddits/mine/subscriber.json")
+            let request = NSMutableURLRequest(url: subscriberURL as URL!)
+            let session = URLSession.shared
             
-            do{
-                let info = try JSONDecoder().decode(subscribedSubredditsRetrieval.self, from: data)
+            request.httpMethod = "GET"
+            
+            var accessTokenString = "bearer "
+            accessTokenString.append(UserDefaults.standard.string(forKey: "currentAccessToken")!)
+            
+            request.setValue("\(accessTokenString)", forHTTPHeaderField: "Authorization")
+            
+            session.dataTask(with: request as URLRequest){ (data,response,error) in
+                guard let data = data else { return }
                 
-                for children in info.data.children {
-                    self.subscribedSubreddits.append(children.data.display_name)
+    //            let backToString = String(data: data, encoding: String.Encoding.utf8) as String!
+    //            print("It's me: "+backToString! as String!)
+                
+                do{
+                    let info = try JSONDecoder().decode(subscribedSubredditsRetrieval.self, from: data)
+                    
+                    for children in info.data.children {
+                        self.subscribedSubreddits.append(children.data.display_name)
+                    }
+                }catch let jsonErr {
+                    print ("I failed Sire, forgive me, please!", jsonErr)
                 }
-            }catch let jsonErr {
-                print ("I failed Sire, forgive me, please!", jsonErr)
-            }
-            
-            if self.sectionsArray.count == 2 {
-            }else{
-                let subscribedSubredditsSection = Section(sectionName: "Subscribed", sectionItems: self.subscribedSubreddits)
-                self.sectionsArray.insert(subscribedSubredditsSection, at: 0)
-            }
-            
-            DispatchQueue.main.async{
-                self.myTableView.reloadData()
-            }
-            print("Subscribed subreddits loaded")
-            
-        }.resume()
-        subsLoadedTrigger += 1
+                
+                if self.sectionsArray.count == 2 {
+                }else{
+                    let subscribedSubredditsSection = Section(sectionName: "Subscribed", sectionItems: self.subscribedSubreddits)
+                    self.sectionsArray.insert(subscribedSubredditsSection, at: 0)
+                }
+                
+                DispatchQueue.main.async{
+                    self.myTableView.reloadData()
+                }
+                print("Subscribed subreddits loaded")
+                
+            }.resume()
+            subsLoadedTrigger += 1
+        }else{
+            print("But something is wrong")
+        }
+        
     }
-
+    
 }
