@@ -13,6 +13,21 @@ class MyCell: UITableViewCell {
     @IBOutlet weak var cellImage: UIImageView!
     @IBOutlet weak var cellTitle: UILabel!
     @IBOutlet weak var cellScore: UILabel!
+    var initialScore = Int()
+    var cellFullname = String()
+    
+
+    @IBAction func upvoteButton(_ sender: Any) {
+        SuperFunctions().vote(fullname: cellFullname, direction: 1)
+        self.cellScore.text = String("\(initialScore+1)")
+        self.cellScore.textColor = UIColor.orange
+    }
+    
+    @IBAction func downvoteButton(_ sender: Any) {
+        SuperFunctions().vote(fullname: cellFullname, direction: -1)
+        self.cellScore.text = String("\(initialScore-1)")
+        self.cellScore.textColor = UIColor.blue
+    }
     
     
     override func awakeFromNib() {

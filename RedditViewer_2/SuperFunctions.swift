@@ -80,7 +80,8 @@ class SuperFunctions{
             }catch let jsonErr {
                 print ("I failed my liege, forgive me, please!", jsonErr)
             }
-        }.resume()
+            
+            }.resume()
     }
     
     
@@ -156,6 +157,32 @@ class SuperFunctions{
         }
         
         
+    }
+    
+    func vote(fullname: String, direction: Int ){
+        
+        let voteURLString = "https://oauth.reddit.com/api/vote"
+        let voteURL = URL(string: voteURLString)
+        
+        let request = NSMutableURLRequest(url: voteURL as URL!)
+        let session = URLSession.shared
+        request.httpMethod = "POST"
+        
+        let postString = "id="+fullname+"&dir="+String("\(direction)")
+        //print(postString)
+        
+        var accessTokenString = "bearer "
+        accessTokenString.append(UserDefaults.standard.string(forKey: "currentAccessToken")!)
+        
+        request.setValue("\(accessTokenString)", forHTTPHeaderField: "Authorization")
+        request.httpBody = postString.data(using: String.Encoding.utf8)
+        
+        session.dataTask(with: request as URLRequest){ (data,response,error) in
+            //guard let data = data else { return }
+            //let backToString = String(data: data, encoding: String.Encoding.utf8) as String!
+            //print(backToString as String!)
+            
+        }.resume()
     }
     
 }

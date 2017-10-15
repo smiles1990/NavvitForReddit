@@ -14,6 +14,8 @@ class SettingsVC: UIViewController {
     
     @IBAction func logMeInButton(_ sender: Any) {
         
+        
+        
     }
     
     @IBAction func refreshToken(_ sender: Any) {

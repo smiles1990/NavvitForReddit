@@ -47,8 +47,6 @@ class ViewController: UITableViewController, UIApplicationDelegate {
         }else{
             print("Subs already loaded.")
         }
-        
-
  
     }
     
@@ -113,17 +111,10 @@ class ViewController: UITableViewController, UIApplicationDelegate {
     
     @objc func refreshTable() {
         
-//        if self.sectionsArray.count == 2 {
-//        }else{
-//            let subscribedSubredditsSection = Section(sectionName: "Subscribed", sectionItems: subscribedSubreddits)
-//            self.sectionsArray.insert(subscribedSubredditsSection, at: 0)
-//        }
-        
-        getSubscribedSubreddits()
         self.myTableView.reloadData()
-        
         refresher.endRefreshing()
         print("Finished refreshing")
+        
     }
     
     
