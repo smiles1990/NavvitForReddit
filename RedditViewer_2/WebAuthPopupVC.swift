@@ -7,17 +7,18 @@
 //
 
 import UIKit
+import WebKit
 
-class webAuthPopupVC: UIViewController, UIWebViewDelegate {
+class webAuthPopupVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
-    @IBOutlet weak var myWebView: UIWebView!
+    @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var guideText: UILabel!
     @IBOutlet weak var snooImage: UIImageView!
     
-    func webViewDidFinishLoad(_ webView: UIWebView){
-        
+    func webView(_ webView: WKWebView, didFinish: WKNavigation!) {
+        print("I'm being called, master")
         if guideText.text == "" {
-                guideText.text = "Login to reddit"
+            guideText.text = "Login to reddit"
         } else {
             if guideText.text == "Login to reddit"{
                 guideText.text = "Scroll down and click Allow or Deny"
@@ -25,18 +26,21 @@ class webAuthPopupVC: UIViewController, UIWebViewDelegate {
                 guideText.text = "Click Done"
                 myDoneButton.isHidden = false
                 snooImage.isHidden = false
-                myWebView.isHidden = true
+                webView.isHidden = true
             }else{
                 print("No more instructions left to give")
             }
         }
     }
     
+    
+    
     @IBOutlet weak var myDoneButton: UIButton!
     
     @IBAction func doneButton(_ sender: Any) {
         
-        let currentURL = myWebView.request?.url?.absoluteString
+        //let currentURL = myWebView.request?.url?.absoluteString
+        let currentURL = webView.url?.absoluteString
         print("I'M MR MEESEEKS \(String(describing: currentURL)) LOOK AT ME!")
         SuperFunctions().parseAuthCode(returnedString: currentURL!)
         SuperFunctions().getAccessToken()
@@ -51,6 +55,7 @@ class webAuthPopupVC: UIViewController, UIWebViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        webView.uiDelegate = self
         
         if UserDefaults.standard.string(forKey: "ClientID") == nil {
             UserDefaults.standard.set("DYOwn2H7ENR2pg", forKey: "ClientID")
@@ -59,17 +64,25 @@ class webAuthPopupVC: UIViewController, UIWebViewDelegate {
         }
         
         let stateString = SuperFunctions().randomString(length: 10)
-        print (stateString)
+        print(stateString)
         UserDefaults.standard.set(stateString, forKey: "currentStateString")
         
         var URLString = "https://www.reddit.com/api/v1/authorize.compact?client_id=DYOwn2H7ENR2pg&response_type=code&state="
         URLString.append(UserDefaults.standard.string(forKey: "currentStateString")!)
         URLString.append("&redirect_uri=http://www.reddit.com&duration=permanent&scope=mysubreddits,read,save,account,submit,privatemessages,vote")
         
+
         let myURL = URL(string: URLString)
+        let myRequest = URLRequest(url: myURL!)
+        webView.load(myRequest)
         
-        myWebView.loadRequest(URLRequest(url: myURL!))
-        
+    }
+    
+    override func loadView() {
+        super.loadView()
+        //webView.uiDelegate = self
+        webView.navigationDelegate = self
+
     }
         
     override func didReceiveMemoryWarning() {

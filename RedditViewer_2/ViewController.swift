@@ -111,7 +111,7 @@ class ViewController: UITableViewController, UIApplicationDelegate {
     
     @objc func refreshTable() {
         
-        self.myTableView.reloadData()
+        getSubscribedSubreddits()
         refresher.endRefreshing()
         print("Finished refreshing")
         
@@ -123,6 +123,8 @@ class ViewController: UITableViewController, UIApplicationDelegate {
         print ("I'm being called")
         if UserDefaults.standard.string(forKey: "currentAccessToken") != nil {
             SuperFunctions().checkTokenStatus()
+            
+            self.subscribedSubreddits = [String]()
             
             let subscriberURL = NSURL(string: "https://oauth.reddit.com/subreddits/mine/subscriber.json")
             let request = NSMutableURLRequest(url: subscriberURL as URL!)
@@ -152,6 +154,9 @@ class ViewController: UITableViewController, UIApplicationDelegate {
                 }
                 
                 if self.sectionsArray.count == 2 {
+                    let subscribedSubredditsSection = Section(sectionName: "Subscribed", sectionItems: self.subscribedSubreddits)
+                    self.sectionsArray.remove(at: 0)
+                    self.sectionsArray.insert(subscribedSubredditsSection, at: 0)
                 }else{
                     let subscribedSubredditsSection = Section(sectionName: "Subscribed", sectionItems: self.subscribedSubreddits)
                     self.sectionsArray.insert(subscribedSubredditsSection, at: 0)
@@ -167,6 +172,7 @@ class ViewController: UITableViewController, UIApplicationDelegate {
         }else{
             print("But something is wrong")
         }
+        
         
     }
     
