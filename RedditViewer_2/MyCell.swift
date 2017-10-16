@@ -20,13 +20,13 @@ class MyCell: UITableViewCell {
     @IBAction func upvoteButton(_ sender: Any) {
         SuperFunctions().vote(fullname: cellFullname, direction: 1)
         self.cellScore.text = String("\(initialScore+1)")
-        self.cellScore.textColor = UIColor.orange
+        self.cellScore.textColor = UIColor(red: 1.0, green: 0.5, blue: 0.0, alpha: 1.0)
     }
     
     @IBAction func downvoteButton(_ sender: Any) {
         SuperFunctions().vote(fullname: cellFullname, direction: -1)
         self.cellScore.text = String("\(initialScore-1)")
-        self.cellScore.textColor = UIColor.blue
+        self.cellScore.textColor = UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0)
     }
     
     

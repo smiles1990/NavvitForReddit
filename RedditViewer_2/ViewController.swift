@@ -86,6 +86,11 @@ class ViewController: UITableViewController, UIApplicationDelegate {
         
     }
     
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int){
+        view.tintColor = UIColor(red: 1.0, green: 0.5, blue: 0.0, alpha: 1.0)
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = UIColor.darkGray
+    }
     
     //ACTIONS
     
