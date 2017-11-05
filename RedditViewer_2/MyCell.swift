@@ -12,23 +12,57 @@ class MyCell: UITableViewCell {
 
     @IBOutlet weak var cellImage: UIImageView!
     @IBOutlet weak var cellTitle: UILabel!
-    @IBOutlet weak var cellScore: UILabel!
-    var initialScore = Int()
-    var cellFullname = String()
+    @IBOutlet weak var scoreLabel: UILabel!
     
+    var currentScore = Int()
+    var thingFullname = String()
+    
+// These two buttons use the buttons' states to determine how they want to vote, based on what the user pressed.
 
+    @IBOutlet weak var upvoteButton: UIButton!
     @IBAction func upvoteButton(_ sender: Any) {
-        SuperFunctions().vote(fullname: cellFullname, direction: 1)
-        self.cellScore.text = String("\(initialScore+1)")
-        self.cellScore.textColor = UIColor(red: 1.0, green: 0.5, blue: 0.0, alpha: 1.0)
+        
+        if upvoteButton.currentImage == #imageLiteral(resourceName: "Upvote") && downvoteButton.currentImage == #imageLiteral(resourceName: "Downvoted") {
+            SuperFunctions().vote(fullname: thingFullname, direction: 1)
+            upvoteButton.setImage(#imageLiteral(resourceName: "Upvoted"), for: .normal)
+            downvoteButton.setImage(#imageLiteral(resourceName: "Downvote"), for: .normal)
+            currentScore = (currentScore + 2)
+            scoreLabel.text = "\(currentScore)"
+        }else if upvoteButton.currentImage == #imageLiteral(resourceName: "Upvote") {
+            SuperFunctions().vote(fullname: thingFullname, direction: 1)
+            upvoteButton.setImage(#imageLiteral(resourceName: "Upvoted"), for: .normal)
+            currentScore = (currentScore + 1)
+            scoreLabel.text = "\(currentScore)"
+        }else if upvoteButton.currentImage == #imageLiteral(resourceName: "Upvoted"){
+            SuperFunctions().vote(fullname: thingFullname, direction: 0)
+            upvoteButton.setImage(#imageLiteral(resourceName: "Upvote"), for: .normal)
+            currentScore = (currentScore - 1)
+            scoreLabel.text = "\(currentScore)"
+            
+        }
     }
     
+    @IBOutlet weak var downvoteButton: UIButton!
     @IBAction func downvoteButton(_ sender: Any) {
-        SuperFunctions().vote(fullname: cellFullname, direction: -1)
-        self.cellScore.text = String("\(initialScore-1)")
-        self.cellScore.textColor = UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0)
+        
+        if downvoteButton.currentImage == #imageLiteral(resourceName: "Downvote") && upvoteButton.currentImage == #imageLiteral(resourceName: "Upvoted") {
+            SuperFunctions().vote(fullname: thingFullname, direction: -1)
+            downvoteButton.setImage(#imageLiteral(resourceName: "Downvoted"), for: .normal)
+            upvoteButton.setImage(#imageLiteral(resourceName: "Upvote"), for: .normal)
+            currentScore = (currentScore - 2)
+            scoreLabel.text = "\(currentScore)"
+        }else if downvoteButton.currentImage == #imageLiteral(resourceName: "Downvote") {
+            SuperFunctions().vote(fullname: thingFullname, direction: -1)
+            downvoteButton.setImage(#imageLiteral(resourceName: "Downvoted"), for: .normal)
+            currentScore = (currentScore - 1)
+            scoreLabel.text = "\(currentScore)"
+        }else if downvoteButton.currentImage == #imageLiteral(resourceName: "Downvoted"){
+            SuperFunctions().vote(fullname: thingFullname, direction: 0)
+            downvoteButton.setImage(#imageLiteral(resourceName: "Downvote"), for: .normal)
+            currentScore = (currentScore + 1)
+            scoreLabel.text = "\(currentScore)"
+        }
     }
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()

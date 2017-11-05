@@ -20,34 +20,35 @@ class ViewController: UITableViewController, UIApplicationDelegate {
     var refresher: UIRefreshControl!
     var myURLString1 = String()
     var sectionsArray = [Section]()
-    var whichView = 0
+    var selectedView = 0
     var loggedIn = false
     var selectedSubredditName = ""
-    var subsLoadedTrigger = 0
     
+    let myUDSuite: UserDefaults = UserDefaults.init(suiteName: "group.navvitForReddit")!
     var subscribedSubreddits = [String]()
+    var generalOptions = ["Manually enter subreddit."]
     var defaultSubreddits: Array = ["Announcements", "Art", "AskReddit", "Askscience", "Aww", "Blog", "Books", "Creepy", "Dataisbeautiful", "DIY", "Documentaries", "EarthPorn", "Explainlikeimfive", "Food", "Funny", "Futurology", "Gadgets", "Gaming", "GetMotivated", "Gifs", "History", "IAmA", "InternetIsBeautiful", "Jokes", "LifeProTips", "Listentothis", "MagicTCG", "Mildlyinteresting", "Movies", "Music", "News", "Nosleep", "Nottheonion", "OldSchoolCool", "Personalfinance", "Philosophy", "Photoshopbattles", "Pics", "Science", "Showerthoughts", "Space", "Sports", "Television", "TIFU", "Todayilearned", "UpliftingNews", "Videos", "Worldnews"]
     
     // VIEW CONTROLLER
     
     override func viewDidLoad() {
         
-        SuperFunctions().checkTokenStatus()
+        if myUDSuite.string(forKey: "Username") != nil {
+            SuperFunctions().checkTokenStatus()
+        }
+        
+        if UserDefaults.standard.string(forKey: "BrowsingPref") == nil {
+            UserDefaults.standard.set("hot", forKey: "BrowsingPref")
+        }
         
         refresher = UIRefreshControl()
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher.addTarget(self, action: #selector(ViewController.refreshTable), for: UIControlEvents.valueChanged)
         tableView.addSubview(refresher)
         
-        let defaultSubredditsSetion = Section(sectionName: "Default", sectionItems: defaultSubreddits)
-        self.sectionsArray.append(defaultSubredditsSetion)
-        
-        if subsLoadedTrigger == 0 {
-            getSubscribedSubreddits()
-        }else{
-            print("Subs already loaded.")
-        }
- 
+        getSubscribedSubreddits()
+        arrangeTableSections()
+    
     }
     
     override func didReceiveMemoryWarning() {
@@ -80,14 +81,14 @@ class ViewController: UITableViewController, UIApplicationDelegate {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        whichView = 1
+        selectedView = 1
         selectedSubredditName = sectionsArray[indexPath.section].sectionItems[indexPath.row]
         performSegue(withIdentifier: "subredditSegue", sender: self)
         
     }
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int){
-        view.tintColor = UIColor(red: 1.0, green: 0.5, blue: 0.0, alpha: 1.0)
+        view.tintColor = UIColor(red: 1.0, green: 0.27, blue: 0.0, alpha: 1.0)
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.textColor = UIColor.darkGray
     }
@@ -96,7 +97,7 @@ class ViewController: UITableViewController, UIApplicationDelegate {
     
     @IBAction func settingsButton(_ sender: Any) {
     
-        whichView = 2
+        selectedView = 2
         performSegue(withIdentifier: "settingsSegue", sender: self)
 
     }
@@ -106,9 +107,9 @@ class ViewController: UITableViewController, UIApplicationDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         
-        if whichView == 1 {
+        if selectedView == 1 {
             let subredditsView = segue.destination as! View2
-            subredditsView.myURLString = myURLString1
+            subredditsView.url = myURLString1
             subredditsView.subredditName = self.selectedSubredditName
         }
         
@@ -122,11 +123,34 @@ class ViewController: UITableViewController, UIApplicationDelegate {
         
     }
     
+    func arrangeTableSections() {
+        
+        if myUDSuite.string(forKey: "Username") != nil {
+            
+            let generalPages = ["Saved", "Submitted", "Upvoted", "Manually enter subreddit"]
+            let generalSection = Section(sectionName: "General", sectionItems: generalPages)
+            
+            let subredditsSection = Section(sectionName: "Subscribed", sectionItems: subscribedSubreddits)
+            
+            sectionsArray = [generalSection, subredditsSection]
+            
+        } else if myUDSuite.string(forKey: "Username") == nil {
+            
+            let generalPages = ["Manually enter subreddit"]
+            let generalSection = Section(sectionName: "General", sectionItems: generalPages)
+            
+            let defaultSection = Section(sectionName: "Default", sectionItems: defaultSubreddits)
+            
+            sectionsArray = [generalSection, defaultSection]
+            
+        }
+    }
+    
     
     func getSubscribedSubreddits(){
         
-        print ("I'm being called")
-        if UserDefaults.standard.string(forKey: "currentAccessToken") != nil {
+        if myUDSuite.string(forKey: "Username") != nil {
+
             SuperFunctions().checkTokenStatus()
             
             self.subscribedSubreddits = [String]()
@@ -136,17 +160,17 @@ class ViewController: UITableViewController, UIApplicationDelegate {
             let session = URLSession.shared
             
             request.httpMethod = "GET"
-            
+
             var accessTokenString = "bearer "
-            accessTokenString.append(UserDefaults.standard.string(forKey: "currentAccessToken")!)
-            
+            accessTokenString.append(SuperFunctions().getToken(identifier: "CurrentAccessToken")!)
+
             request.setValue("\(accessTokenString)", forHTTPHeaderField: "Authorization")
             
             session.dataTask(with: request as URLRequest){ (data,response,error) in
                 guard let data = data else { return }
                 
-    //            let backToString = String(data: data, encoding: String.Encoding.utf8) as String!
-    //            print("It's me: "+backToString! as String!)
+//                let backToString = String(data: data, encoding: String.Encoding.utf8) as String!
+//                print("It's me: "+backToString! as String!)
                 
                 do{
                     let info = try JSONDecoder().decode(subscribedSubredditsRetrieval.self, from: data)
@@ -155,30 +179,16 @@ class ViewController: UITableViewController, UIApplicationDelegate {
                         self.subscribedSubreddits.append(children.data.display_name)
                     }
                 }catch let jsonErr {
-                    print ("I failed Sire, forgive me, please!", jsonErr)
-                }
-                
-                if self.sectionsArray.count == 2 {
-                    let subscribedSubredditsSection = Section(sectionName: "Subscribed", sectionItems: self.subscribedSubreddits)
-                    self.sectionsArray.remove(at: 0)
-                    self.sectionsArray.insert(subscribedSubredditsSection, at: 0)
-                }else{
-                    let subscribedSubredditsSection = Section(sectionName: "Subscribed", sectionItems: self.subscribedSubreddits)
-                    self.sectionsArray.insert(subscribedSubredditsSection, at: 0)
+                    print ("Error parsing subscribed subreddits.", jsonErr)
                 }
                 
                 DispatchQueue.main.async{
+                    self.arrangeTableSections()
                     self.myTableView.reloadData()
                 }
                 print("Subscribed subreddits loaded")
                 
             }.resume()
-            subsLoadedTrigger += 1
-        }else{
-            print("But something is wrong")
         }
-        
-        
     }
-    
 }

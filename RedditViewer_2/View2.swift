@@ -30,8 +30,9 @@ struct RedditPage: Codable {
                 let id: String
                 let score: Int
                 let is_self: Bool
-                let selftext: String
+                let selftext: String?
                 let name: String
+                let likes: Int?
                 
             }
         }
@@ -39,14 +40,16 @@ struct RedditPage: Codable {
 }
 
 struct loadedPost {
+    
     let postTitle: String
     let postImageURL: String
     let postScore: Int
     let postURL: String
     let postID: String
     let is_self: Bool
-    let selftext: String
+    let selftext: String?
     let postFullname: String
+    let postVote: Int?
 }
 
 class View2: UITableViewController {
@@ -54,19 +57,24 @@ class View2: UITableViewController {
     var postArray = [loadedPost]()
     var refresher: UIRefreshControl!
     var imageForCell = UIImage()
-    var myURLString = ""
+    var url = ""
     var subredditName = ""
+    var lastFullname: String = ""
+    var isSubreddit: Bool = false
+    var browsePref: String? = UserDefaults.standard.string(forKey: "BrowsingPref")
+    
     var postCount = 10
     var postID: String = ""
-    var postType: String = ""
+    var segueType: String = ""
     var postURL: String = ""
     var postBody: String = ""
     var postTitle: String = ""
-    var lastFullname: String = ""
+    var postScore: Int = 0
     
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var navItem: UINavigationItem!
-    
+
+    let myUDSuite = UserDefaults.init(suiteName: "group.navvitForReddit")
     
     override func loadView() {
         super.loadView()
@@ -94,33 +102,68 @@ class View2: UITableViewController {
     
     func getPosts(){
         
-        var myURLString: String = ""
+        var urlString: String = ""
         
-        if lastFullname == "" {
-            myURLString = "https://www.reddit.com/r/"+subredditName+"/hot.json?count="+String(postCount)
-        } else {
-            myURLString = "https://www.reddit.com/r/"+subredditName+"/hot.json?count="+String(postCount)+"&after="+lastFullname
+        if subredditName == "Upvoted"{
+            urlString = "https://www.reddit.com/user/"+(myUDSuite?.string(forKey: "Username"))!+"/upvoted.json"
+        }else if subredditName == "Saved"{
+            urlString = "https://www.reddit.com/user/"+(myUDSuite?.string(forKey: "Username"))!+"/saved.json"
+        }else if subredditName == "Submitted"{
+            urlString = "https://www.reddit.com/user/"+(myUDSuite?.string(forKey: "Username"))!+"/submitted.json"
+        }else if subredditName == "Manually enter subreddit"{
+                        
+        
+        }else{
+            isSubreddit = true
+            if lastFullname == "" {
+                urlString = "https://www.reddit.com/r/"+subredditName+"/"+browsePref!+".json?count="
+                urlString.append(String(postCount))
+            } else {
+                urlString = "https://www.reddit.com/r/"+subredditName+"/"+browsePref!+".json?count="
+                urlString.append(String(postCount)+"&after="+lastFullname)
+            }
         }
         
-        guard let myURL = URL(string: myURLString) else { return }
+        if SuperFunctions().getToken(identifier: "CurrentAccessToken") != nil {
+            urlString = String(urlString.dropFirst(11))
+            urlString = "https://oauth"+urlString
+        }
         
+        print(urlString)
+        
+        let jsonURL = NSURL(string: urlString)
+        
+        let request = NSMutableURLRequest(url: jsonURL as URL!)
         let session = URLSession.shared
         
-        //        let request = NSMutableURLRequest(url: myURL as URL!)
-        //        request.httpMethod = "GET"
+        request.httpMethod = "GET"
         
-        session.dataTask(with: myURL) { (data, response, error) in
+        if myUDSuite?.string(forKey: "Username") != nil {
+            var accessTokenString = "bearer "
+            accessTokenString.append(SuperFunctions().getToken(identifier: "CurrentAccessToken")!)
+            request.setValue("\(accessTokenString)", forHTTPHeaderField: "Authorization")
+        }
+        
+        session.dataTask(with: request as URLRequest) { (data, response, error) in
             guard let data = data else { return }
             
-            //            let backToString = String(data: data, encoding: String.Encoding.utf8) as String!
-            //            print(backToString as String!)
+//                let backToString = String(data: data, encoding: String.Encoding.utf8) as String!
+//                print(backToString as String!)
             
             do{
                 let info = try JSONDecoder().decode(RedditPage.self, from: data)
                 
                 for children in info.data.children {
                     
-                    let post = loadedPost(postTitle: children.data.title, postImageURL: children.data.thumbnail, postScore: children.data.score, postURL: children.data.url, postID: children.data.id, is_self: children.data.is_self, selftext: children.data.selftext, postFullname: children.data.name)
+                    let post = loadedPost(postTitle: children.data.title,
+                                          postImageURL: children.data.thumbnail,
+                                          postScore: children.data.score,
+                                          postURL: children.data.url,
+                                          postID: children.data.id,
+                                          is_self: children.data.is_self,
+                                          selftext: children.data.selftext,
+                                          postFullname: children.data.name,
+                                          postVote: children.data.likes)
                     self.lastFullname = children.data.name
                     self.postArray.append(post)
                 }
@@ -136,13 +179,36 @@ class View2: UITableViewController {
         }.resume()
     }
     
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    
+    @IBAction func sidebarButton(_ sender: Any) {
+        if isSubreddit == true {
+        
+        self.segueType = "sidebar"
+        performSegue(withIdentifier: "sidebarSegue", sender: self)
+            
+        }
+    }
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if self.postType == "self" {
+        if self.segueType == "sidebar" {
+            
+            let sidebarView = segue.destination as! SidebarVC
+            
+            if UserDefaults.standard.string(forKey: "Username") == nil{
+                sidebarView.url = "https://www.reddit.com/r/"+subredditName+"/about.json"
+            } else {
+                sidebarView.url = "https://oauth.reddit.com/r/"+subredditName+"/about.json"
+            }
+
+            
+        } else if self.segueType == "self" {
             
             let postURLString = "https://www.reddit.com/r/"+subredditName+"/comments/"+postID+".json"
             
@@ -150,7 +216,8 @@ class View2: UITableViewController {
             selfPostView.url = postURLString
             selfPostView.postTitle = self.postTitle
             selfPostView.postBody = self.postBody
-            
+            selfPostView.postScore = self.postScore
+
         } else {
             let linkView = segue.destination as! LinkView
             linkView.url = postURL
@@ -167,18 +234,19 @@ class View2: UITableViewController {
             self.postID = postArray[indexPath.row].postID
             
             if postArray[indexPath.row].is_self == true {
-                self.postType = "self"
+                self.segueType = "self"
                 self.postTitle = postArray[indexPath.row].postTitle
-                self.postBody = postArray[indexPath.row].selftext
+                self.postBody = postArray[indexPath.row].selftext ?? ""
+                self.postScore = postArray[indexPath.row].postScore
+                
                 performSegue(withIdentifier: "selfPostSegue", sender: self)
             } else {
-                self.postType = "link"
+                self.segueType = "link"
                 performSegue(withIdentifier: "nonSelfSegue", sender: self)
             }
         }
         
     }
-    
     
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (postArray.count+1)
@@ -193,22 +261,34 @@ class View2: UITableViewController {
         }else{
                 var data = Data()
                 let myURL = URL(string: postArray[indexPath.row].postImageURL)
-                    
-                if postArray[indexPath.row].postImageURL != "" {
+            
+            if postArray[indexPath.row].postImageURL == "self" {
+                oneCell = tableView.dequeueReusableCell(withIdentifier: "cell2", for: indexPath) as! MyCell
+            }else if postArray[indexPath.row].postImageURL == "default" {
+                oneCell = tableView.dequeueReusableCell(withIdentifier: "cell2", for: indexPath) as! MyCell
+            }else if postArray[indexPath.row].postImageURL == "" {
+                oneCell = tableView.dequeueReusableCell(withIdentifier: "cell2", for: indexPath) as! MyCell
+            }else{
                     do {
                         data = try Data(contentsOf: myURL!)
                         oneCell.cellImage.image = UIImage(data: data)
                     }catch{
                         print("Error: data error fetching image")
+                        print(postArray[indexPath.row].postImageURL)
                     }
-                }else{
-                    oneCell = tableView.dequeueReusableCell(withIdentifier: "cell2", for: indexPath) as! MyCell
-                }
+            }
                     
             oneCell.cellTitle.text = postArray[indexPath.row].postTitle
-            oneCell.cellScore.text = String("\(postArray[indexPath.row].postScore)")
-            oneCell.initialScore = postArray[indexPath.row].postScore
-            oneCell.cellFullname = postArray[indexPath.row].postFullname
+            oneCell.scoreLabel.text = String("\(postArray[indexPath.row].postScore)")
+            oneCell.currentScore = postArray[indexPath.row].postScore
+            oneCell.thingFullname = postArray[indexPath.row].postFullname
+            if postArray[indexPath.row].postVote != nil {
+                if postArray[indexPath.row].postVote == 1 {
+                    oneCell.upvoteButton.setImage(#imageLiteral(resourceName: "Upvoted"), for: .normal)
+                }else if postArray[indexPath.row].postVote == 0 {
+                    oneCell.downvoteButton.setImage(#imageLiteral(resourceName: "Downvoted"), for: .normal)
+                }
+            }
             
        }
         return (oneCell)

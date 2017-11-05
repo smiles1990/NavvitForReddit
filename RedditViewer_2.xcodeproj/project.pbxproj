@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		520B735E1F8AD2FD0036A78F /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520B735D1F8AD2FD0036A78F /* LinkView.swift */; };
+		52485C561F9CE102009E0EFA /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52485C551F9CE102009E0EFA /* NotificationCenter.framework */; };
+		52485C591F9CE102009E0EFA /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52485C581F9CE102009E0EFA /* TodayViewController.swift */; };
+		52485C5C1F9CE102009E0EFA /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52485C5A1F9CE102009E0EFA /* MainInterface.storyboard */; };
+		52485C601F9CE102009E0EFA /* NavvitWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 52485C531F9CE102009E0EFA /* NavvitWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		52485C6B1F9FC186009E0EFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 526524611F5C242800C04A0F /* Assets.xcassets */; };
 		524CF69E1F72F15100D24180 /* WebAuthPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524CF69D1F72F15100D24180 /* WebAuthPopupVC.swift */; };
 		524CF6A01F767DBE00D24180 /* SuperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524CF69F1F767DBE00D24180 /* SuperFunctions.swift */; };
 		524F3E391F8AC5EA00D17D4D /* SelfPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524F3E381F8AC5EA00D17D4D /* SelfPostView.swift */; };
@@ -21,21 +26,54 @@
 		526524651F5C242800C04A0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526524631F5C242800C04A0F /* LaunchScreen.storyboard */; };
 		5265246D1F5C24A900C04A0F /* View2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5265246C1F5C24A900C04A0F /* View2.swift */; };
 		5265246F1F5C9C0300C04A0F /* MyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5265246E1F5C9C0300C04A0F /* MyCell.swift */; };
+		5290F6FA1FA24EE200B295EF /* CommentPopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290F6F91FA24EE200B295EF /* CommentPopUpVC.swift */; };
+		5290F6FC1FA6BD1000B295EF /* SidebarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290F6FB1FA6BD0F00B295EF /* SidebarVC.swift */; };
 		52D433211F6DFED3005BE77E /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D433201F6DFED3005BE77E /* SettingsVC.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		52485C5E1F9CE102009E0EFA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5265244C1F5C242800C04A0F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52485C521F9CE102009E0EFA;
+			remoteInfo = NavvitWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		52485C641F9CE102009E0EFA /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				52485C601F9CE102009E0EFA /* NavvitWidget.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		520B735D1F8AD2FD0036A78F /* LinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView.swift; sourceTree = "<group>"; };
-		521F586D1F956C240000A976 /* comment.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = comment.gif; sourceTree = "<group>"; };
-		521F586E1F956C330000A976 /* downvote.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = downvote.gif; sourceTree = "<group>"; };
-		521F586F1F956C490000A976 /* noimage.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = noimage.gif; sourceTree = "<group>"; };
-		521F58701F956C4E0000A976 /* subredditicon.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = subredditicon.gif; sourceTree = "<group>"; };
-		521F58711F956C530000A976 /* save.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = save.gif; sourceTree = "<group>"; };
-		521F58721F956C580000A976 /* upvote.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = upvote.gif; sourceTree = "<group>"; };
+		52485C531F9CE102009E0EFA /* NavvitWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NavvitWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		52485C551F9CE102009E0EFA /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		52485C581F9CE102009E0EFA /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		52485C5B1F9CE102009E0EFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		52485C5D1F9CE102009E0EFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52485C651F9D1284009E0EFA /* RedditViewer_2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RedditViewer_2.entitlements; sourceTree = "<group>"; };
+		52485C661F9D1D5E009E0EFA /* NavvitWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NavvitWidget.entitlements; sourceTree = "<group>"; };
 		524CF69D1F72F15100D24180 /* WebAuthPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebAuthPopupVC.swift; sourceTree = "<group>"; };
 		524CF69F1F767DBE00D24180 /* SuperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperFunctions.swift; sourceTree = "<group>"; };
 		524F3E381F8AC5EA00D17D4D /* SelfPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfPostView.swift; sourceTree = "<group>"; };
 		524F3E3E1F8AC6E100D17D4D /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		525204401FAC8EB500E8479F /* AppIconX1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIconX1.png; sourceTree = "<group>"; };
+		525204411FAC8EB600E8479F /* AppIconX3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIconX3.png; sourceTree = "<group>"; };
+		525204421FAC8EB700E8479F /* AppIconX2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIconX2.png; sourceTree = "<group>"; };
+		525204431FAC8EB800E8479F /* SettingsButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsButton.png; sourceTree = "<group>"; };
+		525204441FAC8EBA00E8479F /* SidebarButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SidebarButton.png; sourceTree = "<group>"; };
+		525204451FAC914A00E8479F /* AppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon.png; sourceTree = "<group>"; };
 		525A29371F6AF7A1001BAB3B /* CellOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellOne.swift; sourceTree = "<group>"; };
 		526524541F5C242800C04A0F /* RedditViewer_2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedditViewer_2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		526524571F5C242800C04A0F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -47,12 +85,32 @@
 		526524661F5C242800C04A0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5265246C1F5C24A900C04A0F /* View2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View2.swift; sourceTree = "<group>"; };
 		5265246E1F5C9C0300C04A0F /* MyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCell.swift; sourceTree = "<group>"; };
-		528893661F914F49006CFE98 /* share.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = share.jpg; sourceTree = "<group>"; };
-		52CED39E1F7DAD9100BD62B6 /* Snoo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Snoo.png; sourceTree = "<group>"; };
+		5290F6F91FA24EE200B295EF /* CommentPopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentPopUpVC.swift; sourceTree = "<group>"; };
+		5290F6FB1FA6BD0F00B295EF /* SidebarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarVC.swift; sourceTree = "<group>"; };
 		52D433201F6DFED3005BE77E /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		52D736121F98069C009E4432 /* Upvoted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Upvoted.png; sourceTree = "<group>"; };
+		52D736131F98069C009E4432 /* Upvote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Upvote.png; sourceTree = "<group>"; };
+		52D736141F98069C009E4432 /* ShareIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ShareIcon.png; sourceTree = "<group>"; };
+		52D736151F98069D009E4432 /* SavedIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SavedIcon.png; sourceTree = "<group>"; };
+		52D736161F98069E009E4432 /* Downvoted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Downvoted.png; sourceTree = "<group>"; };
+		52D736171F98069E009E4432 /* Downvote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Downvote.png; sourceTree = "<group>"; };
+		52D736181F98069E009E4432 /* commentIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = commentIcon.png; sourceTree = "<group>"; };
+		52D736191F98069F009E4432 /* SaveIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SaveIcon.png; sourceTree = "<group>"; };
+		52D7361A1F98069F009E4432 /* SubIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SubIcon.png; sourceTree = "<group>"; };
+		52EB6F951FAA1932009D3B67 /* Redditlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Redditlogo.png; sourceTree = "<group>"; };
+		52EB6F961FAA987F009D3B67 /* CommentKarma.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CommentKarma.png; sourceTree = "<group>"; };
+		52EB6F971FAA9883009D3B67 /* PostKarma.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PostKarma.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		52485C501F9CE102009E0EFA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52485C561F9CE102009E0EFA /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		526524511F5C242800C04A0F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -63,11 +121,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		52485C541F9CE102009E0EFA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				52485C551F9CE102009E0EFA /* NotificationCenter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		52485C571F9CE102009E0EFA /* NavvitWidget */ = {
+			isa = PBXGroup;
+			children = (
+				52485C661F9D1D5E009E0EFA /* NavvitWidget.entitlements */,
+				52485C581F9CE102009E0EFA /* TodayViewController.swift */,
+				52485C5A1F9CE102009E0EFA /* MainInterface.storyboard */,
+				52485C5D1F9CE102009E0EFA /* Info.plist */,
+			);
+			path = NavvitWidget;
+			sourceTree = "<group>";
+		};
 		5265244B1F5C242800C04A0F = {
 			isa = PBXGroup;
 			children = (
 				526524561F5C242800C04A0F /* RedditViewer_2 */,
+				52485C571F9CE102009E0EFA /* NavvitWidget */,
+				52485C541F9CE102009E0EFA /* Frameworks */,
 				526524551F5C242800C04A0F /* Products */,
+				52D736181F98069E009E4432 /* commentIcon.png */,
+				52D736171F98069E009E4432 /* Downvote.png */,
+				52D736161F98069E009E4432 /* Downvoted.png */,
+				52EB6F951FAA1932009D3B67 /* Redditlogo.png */,
+				52D736151F98069D009E4432 /* SavedIcon.png */,
+				52D736191F98069F009E4432 /* SaveIcon.png */,
+				52D736141F98069C009E4432 /* ShareIcon.png */,
+				52D7361A1F98069F009E4432 /* SubIcon.png */,
+				52D736131F98069C009E4432 /* Upvote.png */,
+				52D736121F98069C009E4432 /* Upvoted.png */,
+				52EB6F961FAA987F009D3B67 /* CommentKarma.png */,
+				52EB6F971FAA9883009D3B67 /* PostKarma.png */,
+				525204451FAC914A00E8479F /* AppIcon.png */,
+				525204401FAC8EB500E8479F /* AppIconX1.png */,
+				525204421FAC8EB700E8479F /* AppIconX2.png */,
+				525204411FAC8EB600E8479F /* AppIconX3.png */,
+				525204431FAC8EB800E8479F /* SettingsButton.png */,
+				525204441FAC8EBA00E8479F /* SidebarButton.png */,
 			);
 			sourceTree = "<group>";
 		};
@@ -75,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				526524541F5C242800C04A0F /* RedditViewer_2.app */,
+				52485C531F9CE102009E0EFA /* NavvitWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -82,27 +180,22 @@
 		526524561F5C242800C04A0F /* RedditViewer_2 */ = {
 			isa = PBXGroup;
 			children = (
-				524CF69F1F767DBE00D24180 /* SuperFunctions.swift */,
+				52485C651F9D1284009E0EFA /* RedditViewer_2.entitlements */,
 				526524571F5C242800C04A0F /* AppDelegate.swift */,
-				5265246E1F5C9C0300C04A0F /* MyCell.swift */,
-				525A29371F6AF7A1001BAB3B /* CellOne.swift */,
+				524CF69F1F767DBE00D24180 /* SuperFunctions.swift */,
 				526524591F5C242800C04A0F /* ViewController.swift */,
-				524CF69D1F72F15100D24180 /* WebAuthPopupVC.swift */,
 				5265246C1F5C24A900C04A0F /* View2.swift */,
+				524F3E381F8AC5EA00D17D4D /* SelfPostView.swift */,
+				520B735D1F8AD2FD0036A78F /* LinkView.swift */,
 				52D433201F6DFED3005BE77E /* SettingsVC.swift */,
 				5265245B1F5C242800C04A0F /* Main.storyboard */,
-				520B735D1F8AD2FD0036A78F /* LinkView.swift */,
-				524F3E381F8AC5EA00D17D4D /* SelfPostView.swift */,
+				5290F6F91FA24EE200B295EF /* CommentPopUpVC.swift */,
+				524CF69D1F72F15100D24180 /* WebAuthPopupVC.swift */,
+				5290F6FB1FA6BD0F00B295EF /* SidebarVC.swift */,
 				524F3E3E1F8AC6E100D17D4D /* CommentCell.swift */,
+				525A29371F6AF7A1001BAB3B /* CellOne.swift */,
+				5265246E1F5C9C0300C04A0F /* MyCell.swift */,
 				526524611F5C242800C04A0F /* Assets.xcassets */,
-				52CED39E1F7DAD9100BD62B6 /* Snoo.png */,
-				521F586F1F956C490000A976 /* noimage.gif */,
-				521F586D1F956C240000A976 /* comment.gif */,
-				521F58701F956C4E0000A976 /* subredditicon.gif */,
-				521F58711F956C530000A976 /* save.gif */,
-				521F58721F956C580000A976 /* upvote.gif */,
-				521F586E1F956C330000A976 /* downvote.gif */,
-				528893661F914F49006CFE98 /* share.jpg */,
 				526524631F5C242800C04A0F /* LaunchScreen.storyboard */,
 				526524661F5C242800C04A0F /* Info.plist */,
 				5265245E1F5C242800C04A0F /* RedditViewer_2.xcdatamodeld */,
@@ -113,6 +206,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		52485C521F9CE102009E0EFA /* NavvitWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52485C631F9CE102009E0EFA /* Build configuration list for PBXNativeTarget "NavvitWidget" */;
+			buildPhases = (
+				52485C4F1F9CE102009E0EFA /* Sources */,
+				52485C501F9CE102009E0EFA /* Frameworks */,
+				52485C511F9CE102009E0EFA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NavvitWidget;
+			productName = NavvitWidget;
+			productReference = 52485C531F9CE102009E0EFA /* NavvitWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		526524531F5C242800C04A0F /* RedditViewer_2 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 526524691F5C242800C04A0F /* Build configuration list for PBXNativeTarget "RedditViewer_2" */;
@@ -120,10 +230,12 @@
 				526524501F5C242800C04A0F /* Sources */,
 				526524511F5C242800C04A0F /* Frameworks */,
 				526524521F5C242800C04A0F /* Resources */,
+				52485C641F9CE102009E0EFA /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				52485C5F1F9CE102009E0EFA /* PBXTargetDependency */,
 			);
 			name = RedditViewer_2;
 			productName = RedditViewer_2;
@@ -140,9 +252,29 @@
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Smiles Dev";
 				TargetAttributes = {
+					52485C521F9CE102009E0EFA = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 					526524531F5C242800C04A0F = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -160,11 +292,21 @@
 			projectRoot = "";
 			targets = (
 				526524531F5C242800C04A0F /* RedditViewer_2 */,
+				52485C521F9CE102009E0EFA /* NavvitWidget */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		52485C511F9CE102009E0EFA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52485C6B1F9FC186009E0EFA /* Assets.xcassets in Resources */,
+				52485C5C1F9CE102009E0EFA /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		526524521F5C242800C04A0F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -178,11 +320,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		52485C4F1F9CE102009E0EFA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52485C591F9CE102009E0EFA /* TodayViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		526524501F5C242800C04A0F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				524F3E3F1F8AC6E100D17D4D /* CommentCell.swift in Sources */,
+				5290F6FC1FA6BD1000B295EF /* SidebarVC.swift in Sources */,
+				5290F6FA1FA24EE200B295EF /* CommentPopUpVC.swift in Sources */,
 				524F3E391F8AC5EA00D17D4D /* SelfPostView.swift in Sources */,
 				5265245A1F5C242800C04A0F /* ViewController.swift in Sources */,
 				5265246F1F5C9C0300C04A0F /* MyCell.swift in Sources */,
@@ -199,7 +351,23 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		52485C5F1F9CE102009E0EFA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52485C521F9CE102009E0EFA /* NavvitWidget */;
+			targetProxy = 52485C5E1F9CE102009E0EFA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		52485C5A1F9CE102009E0EFA /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				52485C5B1F9CE102009E0EFA /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		5265245B1F5C242800C04A0F /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -219,6 +387,38 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		52485C611F9CE102009E0EFA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = NavvitWidget/NavvitWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P7RXLQJ55N;
+				INFOPLIST_FILE = NavvitWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.SmilesDev.RedditViewer-2.NavvitWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		52485C621F9CE102009E0EFA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = NavvitWidget/NavvitWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P7RXLQJ55N;
+				INFOPLIST_FILE = NavvitWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.SmilesDev.RedditViewer-2.NavvitWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		526524671F5C242800C04A0F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -329,8 +529,11 @@
 		5265246A1F5C242800C04A0F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RedditViewer_2/RedditViewer_2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P7RXLQJ55N;
 				INFOPLIST_FILE = RedditViewer_2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.SmilesDev.RedditViewer-2";
@@ -343,8 +546,11 @@
 		5265246B1F5C242800C04A0F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RedditViewer_2/RedditViewer_2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P7RXLQJ55N;
 				INFOPLIST_FILE = RedditViewer_2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.SmilesDev.RedditViewer-2";
@@ -357,6 +563,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		52485C631F9CE102009E0EFA /* Build configuration list for PBXNativeTarget "NavvitWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52485C611F9CE102009E0EFA /* Debug */,
+				52485C621F9CE102009E0EFA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5265244F1F5C242800C04A0F /* Build configuration list for PBXProject "RedditViewer_2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -13,10 +13,9 @@ class webAuthPopupVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var guideText: UILabel!
-    @IBOutlet weak var snooImage: UIImageView!
+    @IBOutlet weak var myDoneButton: UIButton!
     
     func webView(_ webView: WKWebView, didFinish: WKNavigation!) {
-        print("I'm being called, master")
         if guideText.text == "" {
             guideText.text = "Login to reddit"
         } else {
@@ -25,7 +24,6 @@ class webAuthPopupVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
             }else if guideText.text == "Scroll down and click Allow or Deny"{
                 guideText.text = "Click Done"
                 myDoneButton.isHidden = false
-                snooImage.isHidden = false
                 webView.isHidden = true
             }else{
                 print("No more instructions left to give")
@@ -33,16 +31,12 @@ class webAuthPopupVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
         }
     }
     
-    
-    
-    @IBOutlet weak var myDoneButton: UIButton!
-    
     @IBAction func doneButton(_ sender: Any) {
         
-        //let currentURL = myWebView.request?.url?.absoluteString
         let currentURL = webView.url?.absoluteString
-        print("I'M MR MEESEEKS \(String(describing: currentURL)) LOOK AT ME!")
-        SuperFunctions().parseAuthCode(returnedString: currentURL!)
+        let authCode = currentURL?.dropFirst(46)
+        UserDefaults.standard.set(authCode, forKey: "UserAuthCode")
+        print(UserDefaults.standard.string(forKey: "UserAuthCode")!)
         SuperFunctions().getAccessToken()
         
         dismiss(animated: true, completion: nil)
@@ -69,7 +63,7 @@ class webAuthPopupVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
         
         var URLString = "https://www.reddit.com/api/v1/authorize.compact?client_id=DYOwn2H7ENR2pg&response_type=code&state="
         URLString.append(UserDefaults.standard.string(forKey: "currentStateString")!)
-        URLString.append("&redirect_uri=http://www.reddit.com&duration=permanent&scope=mysubreddits,read,save,account,submit,privatemessages,vote")
+        URLString.append("&redirect_uri=http://www.reddit.com&duration=permanent&scope=mysubreddits,read,save,account,submit,privatemessages,vote,history,identity")
         
 
         let myURL = URL(string: URLString)
@@ -80,7 +74,6 @@ class webAuthPopupVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     override func loadView() {
         super.loadView()
-        //webView.uiDelegate = self
         webView.navigationDelegate = self
 
     }
