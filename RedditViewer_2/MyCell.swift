@@ -10,18 +10,16 @@ import UIKit
 
 class MyCell: UITableViewCell {
 
+// Defininf variables and outlets.
     @IBOutlet weak var cellImage: UIImageView!
     @IBOutlet weak var cellTitle: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
-    
     var currentScore = Int()
     var thingFullname = String()
     
-// These two buttons use the buttons' states to determine how they want to vote, based on what the user pressed.
-
+// These two buttons use the buttons' states to determine how they want to vote, based on what the user pressed
     @IBOutlet weak var upvoteButton: UIButton!
     @IBAction func upvoteButton(_ sender: Any) {
-        
         if upvoteButton.currentImage == #imageLiteral(resourceName: "Upvote") && downvoteButton.currentImage == #imageLiteral(resourceName: "Downvoted") {
             SuperFunctions().vote(fullname: thingFullname, direction: 1)
             upvoteButton.setImage(#imageLiteral(resourceName: "Upvoted"), for: .normal)
@@ -38,13 +36,10 @@ class MyCell: UITableViewCell {
             upvoteButton.setImage(#imageLiteral(resourceName: "Upvote"), for: .normal)
             currentScore = (currentScore - 1)
             scoreLabel.text = "\(currentScore)"
-            
         }
     }
-    
     @IBOutlet weak var downvoteButton: UIButton!
     @IBAction func downvoteButton(_ sender: Any) {
-        
         if downvoteButton.currentImage == #imageLiteral(resourceName: "Downvote") && upvoteButton.currentImage == #imageLiteral(resourceName: "Upvoted") {
             SuperFunctions().vote(fullname: thingFullname, direction: -1)
             downvoteButton.setImage(#imageLiteral(resourceName: "Downvoted"), for: .normal)
@@ -66,13 +61,10 @@ class MyCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }

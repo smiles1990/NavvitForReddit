@@ -10,17 +10,13 @@ import UIKit
 
 class CommentPopUpVC: UIViewController {
     
-
-    
     @IBOutlet weak var popUpView: UIView!
     @IBOutlet weak var commentField: UITextView!
     var fullname: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         popUpView.layer.cornerRadius = 10
-        
     }
     
     

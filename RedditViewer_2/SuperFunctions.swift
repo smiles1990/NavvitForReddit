@@ -302,6 +302,43 @@ class SuperFunctions{
             
         }.resume()
     }
+//Subscribe or unsubscribe to a subreddit on the current user's account.
+    func subscribe(subreddit: String, mode: String){
+        
+        let subURLString = "https://oauth.reddit.com/api/subscribe"
+        let subURL = URL(string: subURLString)
+        
+        let request = NSMutableURLRequest(url: subURL as URL!)
+        let session = URLSession.shared
+        request.httpMethod = "POST"
+        
+        let postString = "sr="+subreddit+"&action="+mode
+        print(postString)
+        
+        var accessTokenString = "bearer "
+        accessTokenString.append(SuperFunctions().getToken(identifier: "CurrentAccessToken")!)
+        
+        request.setValue("\(accessTokenString)", forHTTPHeaderField: "Authorization")
+        request.httpBody = postString.data(using: String.Encoding.utf8)
+        
+        session.dataTask(with: request as URLRequest){ (data,response,error) in
+            guard let data = data else { return }
+            let backToString = String(data: data, encoding: String.Encoding.utf8) as String!
+            print(backToString as String!)
+            
+            }.resume()
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 // *** KEYCHAIN FUNCTIONS ***
 // These functions read and write data encrypted and stored securely in the device's user Keychain.

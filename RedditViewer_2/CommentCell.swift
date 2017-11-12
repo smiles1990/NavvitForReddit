@@ -13,15 +13,11 @@ class CommentCell: UITableViewCell {
     var thingFullname: String = ""
     var currentScore: Int = 0
     
-    // Title
     @IBOutlet weak var titleLabel: UILabel!
-    
-    
-    // Body
     @IBOutlet weak var bodyLabel: UILabel!
     
-    @IBOutlet weak var saveButton: UIButton!
     
+    @IBOutlet weak var saveButton: UIButton!
     @IBAction func saveButton(_ sender: Any) {
         
         if saveButton.currentImage == #imageLiteral(resourceName: "SaveIcon") {
@@ -34,8 +30,6 @@ class CommentCell: UITableViewCell {
         
         
     }
-    
-    
     
     // Multiple
     

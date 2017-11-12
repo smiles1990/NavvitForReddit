@@ -17,6 +17,7 @@
 		524CF6A01F767DBE00D24180 /* SuperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524CF69F1F767DBE00D24180 /* SuperFunctions.swift */; };
 		524F3E391F8AC5EA00D17D4D /* SelfPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524F3E381F8AC5EA00D17D4D /* SelfPostView.swift */; };
 		524F3E3F1F8AC6E100D17D4D /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524F3E3E1F8AC6E100D17D4D /* CommentCell.swift */; };
+		525204471FAF6EEF00E8479F /* ManualEntryPopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525204461FAF6EEF00E8479F /* ManualEntryPopUpVC.swift */; };
 		525A29381F6AF7A1001BAB3B /* CellOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525A29371F6AF7A1001BAB3B /* CellOne.swift */; };
 		526524581F5C242800C04A0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526524571F5C242800C04A0F /* AppDelegate.swift */; };
 		5265245A1F5C242800C04A0F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526524591F5C242800C04A0F /* ViewController.swift */; };
@@ -72,8 +73,9 @@
 		525204411FAC8EB600E8479F /* AppIconX3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIconX3.png; sourceTree = "<group>"; };
 		525204421FAC8EB700E8479F /* AppIconX2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIconX2.png; sourceTree = "<group>"; };
 		525204431FAC8EB800E8479F /* SettingsButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsButton.png; sourceTree = "<group>"; };
-		525204441FAC8EBA00E8479F /* SidebarButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SidebarButton.png; sourceTree = "<group>"; };
 		525204451FAC914A00E8479F /* AppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon.png; sourceTree = "<group>"; };
+		525204461FAF6EEF00E8479F /* ManualEntryPopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualEntryPopUpVC.swift; sourceTree = "<group>"; };
+		525204481FB85FB200E8479F /* SidebarButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SidebarButton.png; sourceTree = "<group>"; };
 		525A29371F6AF7A1001BAB3B /* CellOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellOne.swift; sourceTree = "<group>"; };
 		526524541F5C242800C04A0F /* RedditViewer_2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedditViewer_2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		526524571F5C242800C04A0F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				52D736141F98069C009E4432 /* ShareIcon.png */,
 				52D7361A1F98069F009E4432 /* SubIcon.png */,
 				52D736131F98069C009E4432 /* Upvote.png */,
+				525204481FB85FB200E8479F /* SidebarButton.png */,
 				52D736121F98069C009E4432 /* Upvoted.png */,
 				52EB6F961FAA987F009D3B67 /* CommentKarma.png */,
 				52EB6F971FAA9883009D3B67 /* PostKarma.png */,
@@ -164,7 +167,6 @@
 				525204421FAC8EB700E8479F /* AppIconX2.png */,
 				525204411FAC8EB600E8479F /* AppIconX3.png */,
 				525204431FAC8EB800E8479F /* SettingsButton.png */,
-				525204441FAC8EBA00E8479F /* SidebarButton.png */,
 			);
 			sourceTree = "<group>";
 		};
@@ -189,6 +191,7 @@
 				520B735D1F8AD2FD0036A78F /* LinkView.swift */,
 				52D433201F6DFED3005BE77E /* SettingsVC.swift */,
 				5265245B1F5C242800C04A0F /* Main.storyboard */,
+				525204461FAF6EEF00E8479F /* ManualEntryPopUpVC.swift */,
 				5290F6F91FA24EE200B295EF /* CommentPopUpVC.swift */,
 				524CF69D1F72F15100D24180 /* WebAuthPopupVC.swift */,
 				5290F6FB1FA6BD0F00B295EF /* SidebarVC.swift */,
@@ -338,6 +341,7 @@
 				524F3E391F8AC5EA00D17D4D /* SelfPostView.swift in Sources */,
 				5265245A1F5C242800C04A0F /* ViewController.swift in Sources */,
 				5265246F1F5C9C0300C04A0F /* MyCell.swift in Sources */,
+				525204471FAF6EEF00E8479F /* ManualEntryPopUpVC.swift in Sources */,
 				526524581F5C242800C04A0F /* AppDelegate.swift in Sources */,
 				526524601F5C242800C04A0F /* RedditViewer_2.xcdatamodeld in Sources */,
 				524CF69E1F72F15100D24180 /* WebAuthPopupVC.swift in Sources */,

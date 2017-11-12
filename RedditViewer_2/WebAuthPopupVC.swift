@@ -63,7 +63,7 @@ class webAuthPopupVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
         
         var URLString = "https://www.reddit.com/api/v1/authorize.compact?client_id=DYOwn2H7ENR2pg&response_type=code&state="
         URLString.append(UserDefaults.standard.string(forKey: "currentStateString")!)
-        URLString.append("&redirect_uri=http://www.reddit.com&duration=permanent&scope=mysubreddits,read,save,account,submit,privatemessages,vote,history,identity")
+        URLString.append("&redirect_uri=http://www.reddit.com&duration=permanent&scope=mysubreddits,read,save,account,submit,privatemessages,vote,history,identity,subscribe")
         
 
         let myURL = URL(string: URLString)
