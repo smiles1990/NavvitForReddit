@@ -191,6 +191,36 @@ class SuperFunctions{
         
     }
     
+    func getSubscribedSubreddits(){
+        if myUDSuite.string(forKey: "Username") != nil {
+            self.checkTokenStatus()
+            self.subscribedSubreddits = [String]()
+            let subscriberURL = NSURL(string: "https://oauth.reddit.com/subreddits/mine/subscriber.json")
+            let request = NSMutableURLRequest(url: subscriberURL as URL!)
+            let session = URLSession.shared
+            request.httpMethod = "GET"
+            var accessTokenString = "bearer "
+            accessTokenString.append(SuperFunctions().getToken(identifier: "CurrentAccessToken")!)
+            request.setValue("\(accessTokenString)", forHTTPHeaderField: "Authorization")
+            session.dataTask(with: request as URLRequest){ (data,response,error) in
+                guard let data = data else { return }
+                //                let backToString = String(data: data, encoding: String.Encoding.utf8) as String!
+                //                print("It's me: "+backToString! as String!)
+                do{
+                    let info = try JSONDecoder().decode(subscribedSubredditsRetrieval.self, from: data)
+                    for children in info.data.children {
+                        self.subscribedSubreddits.append(children.data.display_name)
+                    }
+                }catch let jsonErr {
+                    print ("Error parsing subscribed subreddits.", jsonErr)
+                }
+                DispatchQueue.main.async{
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "subs"), object: nil)
+                }
+            }.resume()
+        }
+    }
+    
     
     
     

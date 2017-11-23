@@ -36,6 +36,7 @@ class ViewController: UITableViewController, UIApplicationDelegate, ModalViewCon
 // Variables and referencing outlets.
     @IBOutlet weak var myTableView: UITableView!
     var refresher: UIRefreshControl!
+    var superFunctions = SuperFunctions()
     var sectionsArray = [Section]()
     var selectedView = 0
     var loggedIn = false
@@ -48,9 +49,12 @@ class ViewController: UITableViewController, UIApplicationDelegate, ModalViewCon
     
     override func viewDidLoad() {
         
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.loadSubreddits), name: NSNotification.Name(rawValue: "subs"), object: nil)
+        
     // This checks the status of the users access token(which subsequently refreshes it if necessary), but only if there is a user currently logged in.
         if myUDSuite.string(forKey: "Username") != nil {
-            SuperFunctions().checkTokenStatus()
+            superFunctions.checkTokenStatus()
+            superFunctions.getSubscribedSubreddits()
         }
         
     // This sets the intial standard for the user's browsing type preference.
@@ -65,7 +69,6 @@ class ViewController: UITableViewController, UIApplicationDelegate, ModalViewCon
         tableView.addSubview(refresher)
         
     // Calls functions that aquire/organise the content shown to the user.
-        getSubscribedSubreddits()
         arrangeTableSections()
     
     }
@@ -121,13 +124,20 @@ class ViewController: UITableViewController, UIApplicationDelegate, ModalViewCon
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         if selectedView == 1 {
             let subredditsView = segue.destination as! View2
-            subredditsView.subredditName = self.selectedSubredditName
+            let redditPage = RedditPage.init(subredditName: self.selectedSubredditName)
+            subredditsView.redditPage = redditPage
         }
+    }
+    
+    @objc func loadSubreddits() {
+        self.subscribedSubreddits = superFunctions.subscribedSubreddits
+        arrangeTableSections()
+        tableView.reloadData()
     }
     
 // This function controls what happens when the table is refreshed manually.
     @objc func refreshTable() {
-        getSubscribedSubreddits()
+        superFunctions.getSubscribedSubreddits()
         refresher.endRefreshing()
     }
     
@@ -148,36 +158,36 @@ class ViewController: UITableViewController, UIApplicationDelegate, ModalViewCon
     }
     
 //This will populate the Subscribed section of the table if the user is logged into reddit through the app.
-    func getSubscribedSubreddits(){
-        if myUDSuite.string(forKey: "Username") != nil {
-            SuperFunctions().checkTokenStatus()
-            self.subscribedSubreddits = [String]()
-            let subscriberURL = NSURL(string: "https://oauth.reddit.com/subreddits/mine/subscriber.json")
-            let request = NSMutableURLRequest(url: subscriberURL as URL!)
-            let session = URLSession.shared
-            request.httpMethod = "GET"
-            var accessTokenString = "bearer "
-            accessTokenString.append(SuperFunctions().getToken(identifier: "CurrentAccessToken")!)
-            request.setValue("\(accessTokenString)", forHTTPHeaderField: "Authorization")
-            session.dataTask(with: request as URLRequest){ (data,response,error) in
-                guard let data = data else { return }
-//                let backToString = String(data: data, encoding: String.Encoding.utf8) as String!
-//                print("It's me: "+backToString! as String!)
-                do{
-                    let info = try JSONDecoder().decode(subscribedSubredditsRetrieval.self, from: data)
-                    for children in info.data.children {
-                        self.subscribedSubreddits.append(children.data.display_name)
-                    }
-                }catch let jsonErr {
-                    print ("Error parsing subscribed subreddits.", jsonErr)
-                }
-                DispatchQueue.main.async{
-                    self.arrangeTableSections()
-                    self.myTableView.reloadData()
-                }
-                print("Subscribed subreddits loaded")
-            }.resume()
-        }
-    }
+//    func getSubscribedSubreddits(){
+//        if myUDSuite.string(forKey: "Username") != nil {
+//            SuperFunctions().checkTokenStatus()
+//            self.subscribedSubreddits = [String]()
+//            let subscriberURL = NSURL(string: "https://oauth.reddit.com/subreddits/mine/subscriber.json")
+//            let request = NSMutableURLRequest(url: subscriberURL as URL!)
+//            let session = URLSession.shared
+//            request.httpMethod = "GET"
+//            var accessTokenString = "bearer "
+//            accessTokenString.append(SuperFunctions().getToken(identifier: "CurrentAccessToken")!)
+//            request.setValue("\(accessTokenString)", forHTTPHeaderField: "Authorization")
+//            session.dataTask(with: request as URLRequest){ (data,response,error) in
+//                guard let data = data else { return }
+////                let backToString = String(data: data, encoding: String.Encoding.utf8) as String!
+////                print("It's me: "+backToString! as String!)
+//                do{
+//                    let info = try JSONDecoder().decode(subscribedSubredditsRetrieval.self, from: data)
+//                    for children in info.data.children {
+//                        self.subscribedSubreddits.append(children.data.display_name)
+//                    }
+//                }catch let jsonErr {
+//                    print ("Error parsing subscribed subreddits.", jsonErr)
+//                }
+//                DispatchQueue.main.async{
+//                    self.arrangeTableSections()
+//                    self.myTableView.reloadData()
+//                }
+//                print("Subscribed subreddits loaded")
+//            }.resume()
+//        }
+//    }
     
 }

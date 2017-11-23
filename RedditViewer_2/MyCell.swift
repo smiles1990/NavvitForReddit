@@ -10,10 +10,12 @@ import UIKit
 
 class MyCell: UITableViewCell {
 
-// Defininf variables and outlets.
+// Definine variables and outlets.
     @IBOutlet weak var cellImage: UIImageView!
     @IBOutlet weak var cellTitle: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var authorLabel: UILabel!
+
     var currentScore = Int()
     var thingFullname = String()
     
@@ -38,6 +40,7 @@ class MyCell: UITableViewCell {
             scoreLabel.text = "\(currentScore)"
         }
     }
+    
     @IBOutlet weak var downvoteButton: UIButton!
     @IBAction func downvoteButton(_ sender: Any) {
         if downvoteButton.currentImage == #imageLiteral(resourceName: "Downvote") && upvoteButton.currentImage == #imageLiteral(resourceName: "Upvoted") {
