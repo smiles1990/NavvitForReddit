@@ -73,6 +73,8 @@ class NVTRedditPost{
         
     }
     
+    let myUDSuite: UserDefaults = UserDefaults.init(suiteName: "group.navvitForReddit")!
+    
     func getComments() {
         
 //        guard let jsonURL = URL(string: url) else { return }
@@ -80,7 +82,7 @@ class NVTRedditPost{
         
         var url = self.postURL
         
-        if NVTSuperFunctions().getToken(identifier: "CurrentAccessToken") != nil {
+        if myUDSuite.string(forKey: "Username") != nil {
             url = String(url.dropFirst(11))
             url = "https://oauth"+url
         }
@@ -92,10 +94,12 @@ class NVTRedditPost{
         
         request.httpMethod = "GET"
         
-        var accessTokenString = "bearer "
-        accessTokenString.append(NVTSuperFunctions().getToken(identifier: "CurrentAccessToken")!)
+        if UserDefaults.standard.stringArray(forKey: "Username") != nil {
+            var accessTokenString = "bearer "
+            accessTokenString.append(NVTSuperFunctions().getToken(identifier: "CurrentAccessToken")!)
         
-        request.setValue("\(accessTokenString)", forHTTPHeaderField: "Authorization")
+            request.setValue("\(accessTokenString)", forHTTPHeaderField: "Authorization")
+        }
         
         session.dataTask(with: request as URLRequest) { (data, response, error) in
             guard let data = data else {return}

@@ -13,6 +13,7 @@ class NVTCommentCell: UITableViewCell {
     var thingFullname: String = ""
     var currentScore: Int = 0
     
+    @IBOutlet weak var commentButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var bodyLabel: UILabel!
     
@@ -27,8 +28,7 @@ class NVTCommentCell: UITableViewCell {
             NVTSuperFunctions().unsaveThing(fullname: thingFullname)
             saveButton.setImage(#imageLiteral(resourceName: "SaveIcon"), for: .normal)
         }
-        
-        
+
     }
     
     // Multiple

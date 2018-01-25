@@ -348,16 +348,18 @@ class NVTSuperFunctions{
         let postString = "sr="+subreddit+"&action="+mode
         print(postString)
         
-        var accessTokenString = "bearer "
-        accessTokenString.append(NVTSuperFunctions().getToken(identifier: "CurrentAccessToken")!)
+        if UserDefaults.standard.stringArray(forKey: "Username") != nil {
+            var accessTokenString = "bearer "
+            accessTokenString.append(NVTSuperFunctions().getToken(identifier: "CurrentAccessToken")!)
+            request.setValue("\(accessTokenString)", forHTTPHeaderField: "Authorization")
+        }
         
-        request.setValue("\(accessTokenString)", forHTTPHeaderField: "Authorization")
         request.httpBody = postString.data(using: String.Encoding.utf8)
         
         session.dataTask(with: request as URLRequest){ (data,response,error) in
-            guard let data = data else { return }
-            let backToString = String(data: data, encoding: String.Encoding.utf8) as String!
-            print(backToString as String!)
+            //guard let data = data else { return }
+//            let backToString = String(data: data, encoding: String.Encoding.utf8) as String!
+//            print(backToString as String!)
             
             }.resume()
     }

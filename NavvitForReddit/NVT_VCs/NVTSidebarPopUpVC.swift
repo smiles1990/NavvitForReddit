@@ -20,7 +20,7 @@ struct Sidebar: Codable {
         let public_description: String
         let title: String
         let subscribers: Int
-        let user_is_subscriber: Bool
+        let user_is_subscriber: Bool?
         let name: String
         
     }
@@ -29,6 +29,8 @@ struct Sidebar: Codable {
 class NVTSidebarPopUpVC: UIViewController{
     
     var url: String = ""
+    var userIsSubscribed: Bool?
+    let myUDSuite: UserDefaults = UserDefaults.init(suiteName: "group.navvitForReddit")!
 
     @IBOutlet weak var subredditLabel: UILabel!
     @IBOutlet weak var subredditHeaderImage: UIImageView!
@@ -42,7 +44,6 @@ class NVTSidebarPopUpVC: UIViewController{
     var subscribers = 0
     var publicDescription = ""
     var subredditDescription = ""
-    var userIsSubscribed = false
     var subName = ""
     
     @IBAction func subButton(_ sender: Any) {
@@ -115,9 +116,12 @@ class NVTSidebarPopUpVC: UIViewController{
                 self.subscribers = info.data.subscribers
                 self.publicDescription = info.data.public_description
                 self.subredditDescription = info.data.description
-                self.userIsSubscribed = info.data.user_is_subscriber
                 self.subName = info.data.name
                 
+                if self.myUDSuite.string(forKey: "Username") != nil {
+                    self.userIsSubscribed = info.data.user_is_subscriber!
+                }
+
             }catch let jsonErr {
                 print ("Error fetching sidebar info", jsonErr)
             }
@@ -127,14 +131,23 @@ class NVTSidebarPopUpVC: UIViewController{
                 self.publicDescriptionLabel.text = self.publicDescription
                 self.subscribersLabel.text = String("Subscribers:\(self.subscribers)")
                 self.descriptionTextView.text = self.subredditDescription
-        
+                
+//                if NVTSuperFunctions().getToken(identifier: "CurrentAccessToken") != nil {
+//                    self.subButton.isHidden = false
+//                } else {
+//                    self.subButton.isHidden = true
+//                }
+                
                 if self.userIsSubscribed == true {
                     self.subButton.setTitle("Unsubscribe", for: .normal)
                     self.subButton.setTitleColor(UIColor.red, for: .normal)
                     self.subButton.isHidden = false
-                } else if self.userIsSubscribed == false{
+                } else if self.userIsSubscribed == false {
+                    self.subButton.setTitle("Subscribe", for: .normal)
+                    self.subButton.setTitleColor(UIColor.green, for: .normal)
                     self.subButton.isHidden = false
                 }
+                
             }
             
             }.resume()

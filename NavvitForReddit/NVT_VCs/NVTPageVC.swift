@@ -138,6 +138,9 @@ class NVTPageVC: UITableViewController {
                 }else if redditPage.contents[indexPath.row].postVote == 0 {
                     oneCell.downvoteButton.setImage(#imageLiteral(resourceName: "Downvoted"), for: .normal)
                 }
+            } else if UserDefaults.standard.string(forKey: "Username") == nil {
+                oneCell.upvoteButton.isEnabled = false
+                oneCell.downvoteButton.isEnabled = false
             }
         }
         return oneCell

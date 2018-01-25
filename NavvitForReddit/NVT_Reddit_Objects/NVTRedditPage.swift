@@ -48,12 +48,14 @@ class NVTRedditPage{
         getPage()
     }
     
+    let myUDSuite = UserDefaults.init(suiteName: "group.navvitForReddit")
+    
     func getPage(){
         
         NVTSuperFunctions().checkTokenStatus()
         
         var urlString: String = ""
-        let myUDSuite = UserDefaults.init(suiteName: "group.navvitForReddit")
+        
         let browsePref: String? = UserDefaults.standard.string(forKey: "BrowsingPref")
         let postCount = 10
 
@@ -74,7 +76,7 @@ class NVTRedditPage{
             }
         }
         
-        if NVTSuperFunctions().getToken(identifier: "CurrentAccessToken") != nil {
+        if myUDSuite?.string(forKey: "Username") != nil {
             urlString = String(urlString.dropFirst(11))
             urlString = "https://oauth"+urlString
         }

@@ -87,14 +87,21 @@ class NVTSelfPostVC: UIViewController, UITabBarDelegate, UITableViewDataSource {
             oneCell.currentScore = redditPost.postScore
             oneCell.scoreLabel.text = String("\(redditPost.postScore)")
             
-            if postVote == 1{
-                oneCell.upvoteButton.setImage(#imageLiteral(resourceName: "Upvoted"), for: .normal)
-            }else if postVote == 0{
-                oneCell.downvoteButton.setImage(#imageLiteral(resourceName: "Downvoted"), for: .normal)
-            }
+            if UserDefaults.standard.stringArray(forKey: "Username") == nil {
+                oneCell.saveButton.isEnabled = false
+                oneCell.upvoteButton.isEnabled = false
+                oneCell.downvoteButton.isEnabled = false
+                oneCell.commentButton.isEnabled = false
+            } else {
+                if postVote == 1{
+                    oneCell.upvoteButton.setImage(#imageLiteral(resourceName: "Upvoted"), for: .normal)
+                }else if postVote == 0{
+                    oneCell.downvoteButton.setImage(#imageLiteral(resourceName: "Downvoted"), for: .normal)
+                }
             
-            if redditPost.postSaved == 1 {
-                oneCell.saveButton.setImage(#imageLiteral(resourceName: "SavedIcon"), for: .normal)
+                if redditPost.postSaved == 1 {
+                    oneCell.saveButton.setImage(#imageLiteral(resourceName: "SavedIcon"), for: .normal)
+                }
             }
             
         
